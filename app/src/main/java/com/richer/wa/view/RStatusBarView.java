@@ -1,4 +1,4 @@
-package com.richer.richers.wa.view;
+package com.richer.wa.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.richer.richers.wa.utils.StatusBarUtil;
+import com.richer.wa.utils.StatusBarUtil;
 
 /**
  * create by richer on 2021/10/12

@@ -1,4 +1,4 @@
-package com.richer.richers.wa.utils;
+package com.richer.wa.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.richer.wa.RWApplication;
 
 /**
  * create by richer on 2021/10/12
@@ -20,6 +22,9 @@ public class StatusBarUtil {
      * @return
      */
     public static int getStatusBarHeight(Context context) {
+        if (context == null) {
+            context = RWApplication.getAppContext();
+        }
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         return context.getResources().getDimensionPixelSize(resourceId);
     }
