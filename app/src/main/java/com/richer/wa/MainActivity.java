@@ -1,19 +1,21 @@
 package com.richer.wa;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ActivityMainBinding;
-import com.richer.wa.home.model.ArticleListResponseModel;
-import com.richer.wa.network.NetUtil;
+import com.richer.wa.home.view.HomeFragment;
 import com.richer.wa.utils.StatusBarUtil;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * create by richer on 2021/10/12
@@ -21,7 +23,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding mBinding;
+    private final int TAB_INDEX_0 = 0;
+
+    private ActivityMainBinding mBinding;
+
+    private List<HomeTab> homeTabList = new ArrayList<>();
+
+    private BaseFragment curFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +37,58 @@ public class MainActivity extends AppCompatActivity {
         StatusBarUtil.setStatusBarTransparent(this);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mBinding.btnChangeMain.setOnClickListener(v -> {
-            NetUtil.getHomeApi().getArticleList(0)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new BaseObservable<ArticleListResponseModel>() {
-                        @Override
-                        protected void onSuccess(ArticleListResponseModel articleListResponseModel) {
-                            Log.d("MainActivity", "onSuccess: " + articleListResponseModel.getData().getTotal());
-                        }
-
-                        @Override
-                        protected void onFail(int errorCode, String errorMsg) {
-                            Log.d("MainActivity", "onFail: "+errorCode + ": "+errorMsg);
-                        }
-                    });
-        });
+        initHomeTabs();
+        initView();
 
     }
+
+    private void initView() {
+        modifySelectedTab(TAB_INDEX_0);
+    }
+
+    /**
+     * 初始化首页tab fragment
+     */
+    private void initHomeTabs() {
+        homeTabList.add(new HomeTab("home", HomeFragment.class));
+    }
+
+    private void modifySelectedTab(int tabPosition) {
+        for (int i=0;i<homeTabList.size();i++) {
+            if (i == tabPosition) {
+                showSelectedFragment(homeTabList.get(i));
+            }
+        }
+    }
+
+    private void showSelectedFragment(HomeTab homeTab) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment nextFragment = fragmentManager.findFragmentByTag(homeTab.getName());
+        try {
+            if (nextFragment == null) {
+                nextFragment = homeTab.getFragmentClass().newInstance();
+            }
+            if (nextFragment != null) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                if (curFragment != null && curFragment != nextFragment) {
+                    transaction.hide(curFragment);
+                    transaction.setMaxLifecycle(curFragment, Lifecycle.State.STARTED);
+                }
+                if (nextFragment.isAdded()) {
+                    transaction.show(nextFragment);
+                    transaction.setMaxLifecycle(nextFragment, Lifecycle.State.RESUMED);
+                } else {
+                    transaction.add(R.id.fragment_containner, nextFragment, homeTab.getName());
+                }
+                transaction.commitAllowingStateLoss();
+                curFragment = (BaseFragment) nextFragment;
+            }
+        } catch (IllegalAccessException e) {
+
+        } catch (InstantiationException e) {
+
+        }
+    }
+
+
 }

@@ -40,6 +40,8 @@ import java.util.List;
  *                 "zan": 0
  */
 public class ArticleInfo {
+    private boolean top;
+
     @SerializedName("apkLink")
     private String apkLink;
 
@@ -161,6 +163,14 @@ public class ArticleInfo {
         public void setUrl(String url) {
             this.url = url;
         }
+    }
+
+    public boolean isTop() {
+        return top;
+    }
+
+    public void setTop(boolean top) {
+        this.top = top;
     }
 
     public String getApkLink() {

@@ -1,5 +1,9 @@
 package com.richer.wa;
 
+/**
+ * create by richer on 2021/10/13
+ * 所有response类都要继承BaseResponseModel
+ */
 public class BaseResponseModel {
 
     private int errorCode;

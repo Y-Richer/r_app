@@ -6,13 +6,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -21,7 +18,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NetUtil {
+/**
+ * create by richer on 2021/10/13
+ * network util
+ */
+public class NetWorkUtil {
 
     public static String baseUrl = "https://www.wanandroid.com";
 
@@ -33,7 +34,7 @@ public class NetUtil {
 
     private static Retrofit getRetrofit() {
         if (sRetrofit == null) {
-            synchronized (NetUtil.class) {
+            synchronized (NetWorkUtil.class) {
                 if (sRetrofit == null) {
                     sRetrofit = new Retrofit.Builder()
                             .baseUrl(baseUrl)
@@ -62,7 +63,7 @@ public class NetUtil {
 
     private static OkHttpClient getClient() {
         if (sClient == null) {
-            synchronized (NetUtil.class) {
+            synchronized (NetWorkUtil.class) {
                 if (sClient == null) {
                     sClient = handlerSSLHandShake();
                 }

@@ -5,6 +5,11 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+/**
+ * create by richer on 2021/10/13
+ *
+ * @param <T>
+ */
 public abstract class BaseObservable<T> implements Observer<T> {
     @Override
     public void onSubscribe(@NonNull Disposable d) {
