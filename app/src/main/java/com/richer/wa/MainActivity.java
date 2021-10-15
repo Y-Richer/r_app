@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ActivityMainBinding;
+import com.richer.wa.base.BaseFragment;
 import com.richer.wa.home.view.HomeFragment;
 import com.richer.wa.utils.StatusBarUtil;
 

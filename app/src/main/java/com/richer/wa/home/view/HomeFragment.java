@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.FragmentHomeBinding;
-import com.richer.wa.BaseFragment;
+import com.richer.wa.base.BaseFragment;
 import com.richer.wa.RWViewModelFactory;
+import com.richer.wa.base.BaseWebViewActivity;
 import com.richer.wa.home.adapter.ArticleAdapter;
 import com.richer.wa.home.model.ArticleInfo;
 import com.richer.wa.home.view_model.HomeViewModel;
@@ -30,7 +31,7 @@ import java.util.List;
  * create by richer on 2021/10/14
  * 首页
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArticleClickListener {
 
     private HomeViewModel mViewModel;
     private FragmentHomeBinding mBinding;
@@ -103,7 +104,7 @@ public class HomeFragment extends BaseFragment {
         articleInfoList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mBinding.rvArticleListHome.setLayoutManager(layoutManager);
-        adapter = new ArticleAdapter(articleInfoList);
+        adapter = new ArticleAdapter(articleInfoList, this);
         mBinding.rvArticleListHome.setAdapter(adapter);
 
         mBinding.refreshLayoutHome.setOnRefreshListener(new OnRefreshListener() {
@@ -120,4 +121,12 @@ public class HomeFragment extends BaseFragment {
         });
 
     }
+
+    @Override
+    public void onClick(ArticleInfo article) {
+        String url = article.getLink();
+        String title = article.getTitle();
+        BaseWebViewActivity.start(getContext(), url, title);
+    }
+
 }

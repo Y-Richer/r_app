@@ -1,5 +1,7 @@
 package com.richer.wa;
 
+import com.richer.wa.base.BaseFragment;
+
 /**
  * create by richer on 2021/10/14
  *

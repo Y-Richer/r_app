@@ -1,4 +1,4 @@
-package com.richer.wa;
+package com.richer.wa.base;
 
 import com.trello.rxlifecycle4.components.support.RxFragment;
 

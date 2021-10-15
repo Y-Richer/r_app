@@ -27,9 +27,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     private final String TEXT_TIME = "时间";
 
     private List<ArticleInfo> articleList;
+    private OnArticleClickListener clickListener;
 
-    public ArticleAdapter(List<ArticleInfo> articleList) {
+    public ArticleAdapter(List<ArticleInfo> articleList, OnArticleClickListener clickListener) {
         this.articleList = articleList;
+        this.clickListener = clickListener;
     }
 
     public void setArticleList(List<ArticleInfo> articleList) {
@@ -46,6 +48,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ArticleInfo article = articleList.get(position);
+
+        //点击事件
+        holder.mBinding.clArticleItem.setOnClickListener(v -> {
+            clickListener.onClick(article);
+        });
+
         holder.mBinding.tvTitleArticle.setText(article.getTitle());
         //展示new标签
         if (article.isFresh()) {
@@ -105,6 +113,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             super(itemView);
             mBinding = DataBindingUtil.bind(itemView);
         }
+    }
+
+    public interface OnArticleClickListener {
+        void onClick(ArticleInfo article);
     }
 
 }

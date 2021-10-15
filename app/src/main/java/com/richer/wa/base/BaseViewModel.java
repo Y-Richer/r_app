@@ -1,6 +1,8 @@
-package com.richer.wa;
+package com.richer.wa.base;
 
 import androidx.lifecycle.ViewModel;
+
+import com.richer.wa.API;
 
 /**
  * create by richer on 2021/10/14

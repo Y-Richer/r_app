@@ -1,4 +1,4 @@
-package com.richer.wa;
+package com.richer.wa.base;
 
 
 import io.reactivex.rxjava3.annotations.NonNull;

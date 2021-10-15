@@ -1,4 +1,4 @@
-package com.richer.wa;
+package com.richer.wa.base;
 
 /**
  * create by richer on 2021/10/13

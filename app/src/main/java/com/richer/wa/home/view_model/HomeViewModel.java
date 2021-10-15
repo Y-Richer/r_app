@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.richer.wa.API;
-import com.richer.wa.BaseObservable;
-import com.richer.wa.BaseViewModel;
+import com.richer.wa.base.BaseObservable;
+import com.richer.wa.base.BaseViewModel;
 import com.richer.wa.home.model.ArticleListResponseModel;
 import com.richer.wa.network.HomeAPI;
 

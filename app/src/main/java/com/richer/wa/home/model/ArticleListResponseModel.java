@@ -1,7 +1,7 @@
 package com.richer.wa.home.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.richer.wa.BaseResponseModel;
+import com.richer.wa.base.BaseResponseModel;
 
 import java.util.List;
 
