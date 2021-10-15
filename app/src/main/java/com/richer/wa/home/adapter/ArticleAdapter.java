@@ -13,6 +13,7 @@ import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ItemArticleInfoHomeBinding;
 import com.richer.wa.home.model.ArticleInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,16 +27,29 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     private final String TEXT_CLASSIFY = "分类";
     private final String TEXT_TIME = "时间";
 
-    private List<ArticleInfo> articleList;
+    private List<ArticleInfo> commonArticleList = new ArrayList<>();
+    private List<ArticleInfo> topArticleList = new ArrayList<>();
+    private List<ArticleInfo> articleList = new ArrayList<>();
     private OnArticleClickListener clickListener;
 
-    public ArticleAdapter(List<ArticleInfo> articleList, OnArticleClickListener clickListener) {
-        this.articleList = articleList;
+    public ArticleAdapter(OnArticleClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
-    public void setArticleList(List<ArticleInfo> articleList) {
-        this.articleList = articleList;
+    private void resetArticleList() {
+        articleList.clear();
+        articleList.addAll(topArticleList);
+        articleList.addAll(commonArticleList);
+    }
+
+    public void setCommonArticleList(List<ArticleInfo> commonArticleList) {
+        this.commonArticleList = commonArticleList;
+        resetArticleList();
+    }
+
+    public void setTopArticleList(List<ArticleInfo> topArticleList) {
+        this.topArticleList = topArticleList;
+        resetArticleList();
     }
 
     @NonNull
@@ -103,7 +117,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return articleList.size();
+        return commonArticleList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

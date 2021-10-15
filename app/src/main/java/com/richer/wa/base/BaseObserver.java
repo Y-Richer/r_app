@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
  *
  * @param <T>
  */
-public abstract class BaseObservable<T> implements Observer<T> {
+public abstract class BaseObserver<T> implements Observer<T> {
     @Override
     public void onSubscribe(@NonNull Disposable d) {
 

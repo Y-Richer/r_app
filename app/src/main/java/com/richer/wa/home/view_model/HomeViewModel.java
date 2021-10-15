@@ -1,12 +1,15 @@
 package com.richer.wa.home.view_model;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.richer.wa.API;
-import com.richer.wa.base.BaseObservable;
+import com.richer.wa.base.BaseObserver;
 import com.richer.wa.base.BaseViewModel;
 import com.richer.wa.home.model.ArticleListResponseModel;
+import com.richer.wa.home.model.TopArticleListModel;
 import com.richer.wa.network.HomeAPI;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -14,24 +17,24 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeViewModel extends BaseViewModel {
 
-    private HomeAPI mApi;
+    private HomeAPI mApi = (HomeAPI) api;
 
     private int page;
 
     public HomeViewModel(API api) {
         super(api);
+        if (api instanceof HomeAPI) {
+            mApi = (HomeAPI) api;
+        }
     }
 
     /**
      * 检查api
+     *
      * @return
      */
     private boolean checkApi() {
-        if (api instanceof HomeAPI) {
-            mApi = (HomeAPI) api;
-            return true;
-        }
-        return false;
+        return api instanceof HomeAPI;
     }
 
     private MutableLiveData<Boolean> refreshFinish = new MutableLiveData<>();
@@ -58,6 +61,17 @@ public class HomeViewModel extends BaseViewModel {
         return addArticles;
     }
 
+    private MutableLiveData<TopArticleListModel> topArticles = new MutableLiveData<>();
+
+    public LiveData<TopArticleListModel> addTopArticles() {
+        return topArticles;
+    }
+
+    /**
+     * 获取文章列表
+     *
+     * @param isRefresh
+     */
     public void getArticleList(boolean isRefresh) {
         if (checkApi()) {
             //刷新page置0, 否则页数+1
@@ -69,7 +83,7 @@ public class HomeViewModel extends BaseViewModel {
             mApi.getArticleList(page)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new BaseObservable<ArticleListResponseModel>() {
+                    .subscribe(new BaseObserver<ArticleListResponseModel>() {
                         @Override
                         protected void onSuccess(ArticleListResponseModel articleListResponseModel) {
                             if (isRefresh) {
@@ -84,6 +98,29 @@ public class HomeViewModel extends BaseViewModel {
                         @Override
                         protected void onFail(int errorCode, String errorMsg) {
 
+                        }
+                    });
+        }
+    }
+
+    /**
+     * 获取置顶文章
+     */
+    public void getTopArticleList() {
+        if (checkApi()) {
+            mApi.getTopArticleList()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseObserver<TopArticleListModel>() {
+                        @Override
+                        protected void onSuccess(TopArticleListModel topArticleListModel) {
+                            refreshFinish.setValue(true);
+                            topArticles.setValue(topArticleListModel);
+                        }
+
+                        @Override
+                        protected void onFail(int errorCode, String errorMsg) {
+                            Log.d("TAG", "onFail: ");
                         }
                     });
         }

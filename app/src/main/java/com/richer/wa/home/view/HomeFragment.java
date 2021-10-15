@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.FragmentHomeBinding;
-import com.richer.wa.base.BaseFragment;
 import com.richer.wa.RWViewModelFactory;
+import com.richer.wa.base.BaseFragment;
 import com.richer.wa.base.BaseWebViewActivity;
 import com.richer.wa.home.adapter.ArticleAdapter;
 import com.richer.wa.home.model.ArticleInfo;
@@ -24,7 +24,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +36,8 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
     private FragmentHomeBinding mBinding;
     private ArticleAdapter adapter;
 
-    private List<ArticleInfo> articleInfoList;
+    private List<ArticleInfo> commonArticleList;
+    private List<ArticleInfo> topArticleList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,9 +65,9 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
         if (mViewModel != null) {
             mViewModel.getRefreshArticles().observe(getViewLifecycleOwner(), articleModel -> {
                 if (articleModel != null && articleModel.getData() != null) {
-                    articleInfoList = articleModel.getData().getDatas();
-                    if (articleInfoList != null) {
-                        adapter.setArticleList(articleInfoList);
+                    commonArticleList = articleModel.getData().getDatas();
+                    if (commonArticleList != null) {
+                        adapter.setCommonArticleList(commonArticleList);
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -79,9 +79,9 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
             });
             mViewModel.addRefreshArticles().observe(getViewLifecycleOwner(), articleModel -> {
                 if (articleModel != null && articleModel.getData() != null) {
-                    articleInfoList.addAll(articleModel.getData().getDatas());
-                    if (articleInfoList != null) {
-                        adapter.setArticleList(articleInfoList);
+                    commonArticleList.addAll(articleModel.getData().getDatas());
+                    if (commonArticleList != null) {
+                        adapter.setCommonArticleList(commonArticleList);
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -91,26 +91,39 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
                     mBinding.refreshLayoutHome.finishLoadMore();
                 }
             });
+            mViewModel.addTopArticles().observe(getViewLifecycleOwner(), articleModel -> {
+                if (articleModel != null) {
+                    topArticleList = articleModel.getTopArticles();
+                    if (topArticleList != null) {
+                        for (ArticleInfo article : topArticleList) {
+                            article.setTop(true);
+                        }
+                        adapter.setTopArticleList(topArticleList);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
         }
     }
 
     private void initData() {
         if (mViewModel != null) {
             mViewModel.getArticleList(true);
+            mViewModel.getTopArticleList();
         }
     }
 
     private void initView() {
-        articleInfoList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mBinding.rvArticleListHome.setLayoutManager(layoutManager);
-        adapter = new ArticleAdapter(articleInfoList, this);
+        adapter = new ArticleAdapter(this);
         mBinding.rvArticleListHome.setAdapter(adapter);
 
         mBinding.refreshLayoutHome.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mViewModel.getArticleList(true);
+                mViewModel.getTopArticleList();
             }
         });
         mBinding.refreshLayoutHome.setOnLoadMoreListener(new OnLoadMoreListener() {
