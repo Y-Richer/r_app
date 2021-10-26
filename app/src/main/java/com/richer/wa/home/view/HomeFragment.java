@@ -1,5 +1,6 @@
 package com.richer.wa.home.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.FragmentHomeBinding;
+import com.richer.wa.MainActivity;
 import com.richer.wa.RWViewModelFactory;
 import com.richer.wa.base.BaseFragment;
 import com.richer.wa.base.BaseWebViewActivity;
@@ -38,6 +40,24 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
 
     private List<ArticleInfo> commonArticleList;
     private List<ArticleInfo> topArticleList;
+
+    private MainActivity mActivity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            mActivity = (MainActivity) context;
+        } catch (Exception e) {
+            mActivity = null;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mActivity = null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,6 +131,9 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
             mViewModel.getArticleList(true);
             mViewModel.getTopArticleList();
         }
+        if (mActivity != null) {
+            mActivity.initData();
+        }
     }
 
     private void initView() {
@@ -122,8 +145,7 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
         mBinding.refreshLayoutHome.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mViewModel.getArticleList(true);
-                mViewModel.getTopArticleList();
+                initData();
             }
         });
         mBinding.refreshLayoutHome.setOnLoadMoreListener(new OnLoadMoreListener() {

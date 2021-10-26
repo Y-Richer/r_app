@@ -1,5 +1,7 @@
 package com.richer.wa.network;
 
+import com.richer.wa.API;
+
 import java.lang.reflect.Field;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -55,6 +57,10 @@ public class NetWorkUtil {
         T object = getRetrofit().create(apiClass);
         apiMap.put(apiClass, object);
         return object;
+    }
+
+    public static API getAPI() {
+        return getAPI(API.class);
     }
 
     public static HomeAPI getHomeApi() {
