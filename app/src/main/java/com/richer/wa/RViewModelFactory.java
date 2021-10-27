@@ -12,11 +12,11 @@ import java.lang.reflect.InvocationTargetException;
  * create by richer on 2021/10/14
  * ViewModel工厂,带api参数
  */
-public class RWViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+public class RViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private API api;
 
-    public RWViewModelFactory(API api) {
+    public RViewModelFactory(API api) {
         this.api = api;
     }
 

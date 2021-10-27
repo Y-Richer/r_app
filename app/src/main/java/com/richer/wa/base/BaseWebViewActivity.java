@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -12,19 +11,17 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ActivityBaseWebViewBinding;
 import com.richer.wa.CommonHeaderView;
-import com.richer.wa.utils.StatusBarUtil;
 
 /**
  * create by richer on 2021/10/15
  */
-public class BaseWebViewActivity extends AppCompatActivity implements CommonHeaderView.OnHeaderClickListener, View.OnClickListener {
+public class BaseWebViewActivity extends BaseActivity implements CommonHeaderView.OnHeaderClickListener, View.OnClickListener {
 
     ActivityBaseWebViewBinding mBinding;
 
@@ -39,13 +36,9 @@ public class BaseWebViewActivity extends AppCompatActivity implements CommonHead
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        StatusBarUtil.setStatusBarTransparent(this);
+    protected void initActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_base_web_view);
-
         initView();
-
     }
 
     private void initView() {

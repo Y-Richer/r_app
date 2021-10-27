@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.richer.wa.network.NetWorkUtil;
 
-public class RWApplication extends Application {
+public class RApplication extends Application {
 
     private static Application sApplication;
     private static Context sContext;
