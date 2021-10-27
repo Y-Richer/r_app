@@ -14,13 +14,19 @@ import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ActivityMainBinding;
 import com.richer.wa.base.BaseActivity;
 import com.richer.wa.base.BaseFragment;
+import com.richer.wa.eventbus.event.DataChangeEvent;
 import com.richer.wa.home.model.HotSearchModel;
 import com.richer.wa.home.view.HomeFragment;
 import com.richer.wa.network.NetWorkUtil;
 import com.richer.wa.test.TestActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * create by richer on 2021/10/12
@@ -49,6 +55,18 @@ public class MainActivity extends BaseActivity {
         initData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     public void initData() {
         mViewModel.getHotSearchKey();
     }
@@ -59,7 +77,8 @@ public class MainActivity extends BaseActivity {
         mViewModel.hotSearchKeys().observe(this, hotSearchModel -> {
             if (hotSearchModel != null && hotSearchModel.getData() != null) {
                 if (hotSearchModel.getData().size() > 0) {
-                    HotSearchModel.HotSearchBean hotSearchBean = hotSearchModel.getData().get(0);
+                    int randomIndex = new Random().nextInt(hotSearchModel.getData().size());
+                    HotSearchModel.HotSearchBean hotSearchBean = hotSearchModel.getData().get(randomIndex);
                     mBinding.tvSearchHotMain.setText(hotSearchBean.getName());
                 }
             }
@@ -113,6 +132,11 @@ public class MainActivity extends BaseActivity {
     public void test(View view) {
         Intent intent = new Intent(this, TestActivity.class);
         startActivity(intent);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataChange(DataChangeEvent event) {
+        initData();
     }
 
 

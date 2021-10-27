@@ -18,6 +18,7 @@ import com.richer.wa.MainActivity;
 import com.richer.wa.RViewModelFactory;
 import com.richer.wa.base.BaseFragment;
 import com.richer.wa.base.BaseWebViewActivity;
+import com.richer.wa.eventbus.event.DataChangeEvent;
 import com.richer.wa.home.adapter.ArticleAdapter;
 import com.richer.wa.home.model.ArticleInfo;
 import com.richer.wa.home.view_model.HomeViewModel;
@@ -25,6 +26,8 @@ import com.richer.wa.network.NetWorkUtil;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -130,9 +133,7 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
         if (mViewModel != null) {
             mViewModel.getArticleList(true);
             mViewModel.getTopArticleList();
-        }
-        if (mActivity != null) {
-            mActivity.initData();
+            EventBus.getDefault().post(new DataChangeEvent());
         }
     }
 
