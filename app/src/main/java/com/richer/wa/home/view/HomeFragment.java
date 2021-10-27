@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.FragmentHomeBinding;
 import com.richer.wa.MainActivity;
-import com.richer.wa.RWViewModelFactory;
+import com.richer.wa.RViewModelFactory;
 import com.richer.wa.base.BaseFragment;
 import com.richer.wa.base.BaseWebViewActivity;
 import com.richer.wa.home.adapter.ArticleAdapter;
@@ -63,7 +63,7 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(getViewModelStore(),
-                new RWViewModelFactory(NetWorkUtil.getHomeApi())).get(HomeViewModel.class);
+                new RViewModelFactory(NetWorkUtil.getHomeApi())).get(HomeViewModel.class);
     }
 
     @Nullable

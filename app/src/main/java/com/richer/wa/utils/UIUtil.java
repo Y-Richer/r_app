@@ -3,7 +3,7 @@ package com.richer.wa.utils;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.richer.wa.RWApplication;
+import com.richer.wa.RApplication;
 
 public class UIUtil {
 
@@ -13,7 +13,7 @@ public class UIUtil {
     }
 
     public static int dp2px(float dipValue) {
-        return dp2px(RWApplication.getAppContext(), dipValue);
+        return dp2px(RApplication.getAppContext(), dipValue);
     }
 
     /**
@@ -23,7 +23,7 @@ public class UIUtil {
      */
     public static int getScreenWidth(Context context) {
         if (context == null) {
-            context = RWApplication.getAppContext();
+            context = RApplication.getAppContext();
         }
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         if (dm == null) {

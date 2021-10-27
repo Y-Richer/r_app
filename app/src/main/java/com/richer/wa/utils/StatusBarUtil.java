@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.richer.wa.RWApplication;
+import com.richer.wa.RApplication;
 
 /**
  * create by richer on 2021/10/12
@@ -23,7 +23,7 @@ public class StatusBarUtil {
      */
     public static int getStatusBarHeight(Context context) {
         if (context == null) {
-            context = RWApplication.getAppContext();
+            context = RApplication.getAppContext();
         }
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         return context.getResources().getDimensionPixelSize(resourceId);

@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity {
     protected void initActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mViewModel = new ViewModelProvider(getViewModelStore(),
-                new RWViewModelFactory(NetWorkUtil.getAPI())).get(MainViewModel.class);
+                new RViewModelFactory(NetWorkUtil.getAPI())).get(MainViewModel.class);
 
         initHomeTabs();
         initView();
