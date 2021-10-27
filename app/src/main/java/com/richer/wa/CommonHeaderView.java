@@ -46,8 +46,10 @@ public class CommonHeaderView extends LinearLayout {
         mBinding.view.setLayoutParams(params);
 
         mBinding.tvTitleHeader.setText(title);
-        mBinding.ivBackHeader.setOnClickListener(clickListener::onClickBack);
-        mBinding.ivMenuHeader.setOnClickListener(clickListener::onClickMenu);
+        if (clickListener != null) {
+            mBinding.ivBackHeader.setOnClickListener(clickListener::onClickBack);
+            mBinding.ivMenuHeader.setOnClickListener(clickListener::onClickMenu);
+        }
     }
 
     public void setMenuImage(Drawable drawable) {

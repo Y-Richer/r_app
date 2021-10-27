@@ -18,5 +18,7 @@ public class TestActivity extends BaseActivity {
 
     private void initView() {
         mBinding.headerTest.init("Test", null);
+
     }
+
 }
