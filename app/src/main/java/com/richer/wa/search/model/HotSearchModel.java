@@ -1,4 +1,4 @@
-package com.richer.wa.home.model;
+package com.richer.wa.search.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.richer.wa.base.BaseResponseModel;

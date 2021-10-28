@@ -63,10 +63,6 @@ public class NetWorkUtil {
         return getAPI(API.class);
     }
 
-    public static HomeAPI getHomeApi() {
-        return getAPI(HomeAPI.class);
-    }
-
     private static OkHttpClient getClient() {
         if (sClient == null) {
             synchronized (NetWorkUtil.class) {

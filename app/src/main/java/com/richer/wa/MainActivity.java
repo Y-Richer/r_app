@@ -8,16 +8,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ActivityMainBinding;
 import com.richer.wa.base.BaseActivity;
 import com.richer.wa.base.BaseFragment;
 import com.richer.wa.eventbus.event.DataChangeEvent;
-import com.richer.wa.home.model.HotSearchModel;
-import com.richer.wa.home.view.HomeFragment;
-import com.richer.wa.network.NetWorkUtil;
+import com.richer.wa.home.HomeFragment;
+import com.richer.wa.search.model.HotSearchModel;
+import com.richer.wa.search.view.SearchActivity;
+import com.richer.wa.search.view_model.SearchViewModel;
 import com.richer.wa.test.TestActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,7 +32,7 @@ import java.util.Random;
  * create by richer on 2021/10/12
  * MainActivity
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<SearchViewModel> {
 
     private final int TAB_INDEX_0 = 0;
 
@@ -40,15 +40,16 @@ public class MainActivity extends BaseActivity {
 
     private List<HomeTab> homeTabList = new ArrayList<>();
 
-    private MainViewModel mViewModel;
+    @Override
+    public void setClazz() {
+        clazz = SearchViewModel.class;
+    }
 
     private BaseFragment curFragment;
 
     @Override
     protected void initActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mViewModel = new ViewModelProvider(getViewModelStore(),
-                new RViewModelFactory(NetWorkUtil.getAPI())).get(MainViewModel.class);
 
         initHomeTabs();
         initView();
@@ -68,13 +69,13 @@ public class MainActivity extends BaseActivity {
     }
 
     public void initData() {
-        mViewModel.getHotSearchKey();
+        mViewModel.getHotSearchWord();
     }
 
     private void initView() {
         modifySelectedTab(TAB_INDEX_0);
 
-        mViewModel.hotSearchKeys().observe(this, hotSearchModel -> {
+        mViewModel.hotSearchModel().observe(this, hotSearchModel -> {
             if (hotSearchModel != null && hotSearchModel.getData() != null) {
                 if (hotSearchModel.getData().size() > 0) {
                     int randomIndex = new Random().nextInt(hotSearchModel.getData().size());
@@ -129,8 +130,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void test(View view) {
+    public void goTest(View view) {
         Intent intent = new Intent(this, TestActivity.class);
+        startActivity(intent);
+    }
+
+    public void goSearch(View view) {
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 

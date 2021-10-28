@@ -21,7 +21,12 @@ import com.richer.wa.CommonHeaderView;
 /**
  * create by richer on 2021/10/15
  */
-public class BaseWebViewActivity extends BaseActivity implements CommonHeaderView.OnHeaderClickListener, View.OnClickListener {
+public class BaseWebViewActivity extends BaseActivity<BaseViewModel> implements CommonHeaderView.OnHeaderClickListener, View.OnClickListener {
+
+    @Override
+    public void setClazz() {
+        clazz = BaseViewModel.class;
+    }
 
     ActivityBaseWebViewBinding mBinding;
 

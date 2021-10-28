@@ -1,4 +1,4 @@
-package com.richer.wa.home.view;
+package com.richer.wa.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = new ViewModelProvider(getViewModelStore(),
-                new RViewModelFactory(NetWorkUtil.getHomeApi())).get(HomeViewModel.class);
+                new RViewModelFactory(NetWorkUtil.getAPI())).get(HomeViewModel.class);
     }
 
     @Nullable

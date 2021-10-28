@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.richer.wa.base.BaseObserver;
 import com.richer.wa.base.BaseViewModel;
-import com.richer.wa.home.model.HotSearchModel;
+import com.richer.wa.search.model.HotSearchModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
