@@ -52,6 +52,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         resetArticleList();
     }
 
+    public void addCommonArticleList(List<ArticleInfo> commonArticleList) {
+        this.commonArticleList.addAll(commonArticleList);
+        resetArticleList();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

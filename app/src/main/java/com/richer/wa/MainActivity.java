@@ -1,6 +1,7 @@
 package com.richer.wa;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
@@ -37,6 +38,7 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
     private final int TAB_INDEX_0 = 0;
 
     private ActivityMainBinding mBinding;
+    String mHotSearWord;
 
     private List<HomeTab> homeTabList = new ArrayList<>();
 
@@ -80,7 +82,8 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
                 if (hotSearchModel.getData().size() > 0) {
                     int randomIndex = new Random().nextInt(hotSearchModel.getData().size());
                     HotSearchModel.HotSearchBean hotSearchBean = hotSearchModel.getData().get(randomIndex);
-                    mBinding.tvSearchHotMain.setText(hotSearchBean.getName());
+                    mHotSearWord = hotSearchBean.getName();
+                    mBinding.tvSearchHotMain.setText(mHotSearWord);
                 }
             }
         });
@@ -137,6 +140,9 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
 
     public void goSearch(View view) {
         Intent intent = new Intent(this, SearchActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("search_key", mHotSearWord);
+        intent.putExtra(BUNDLE_KEY, bundle);
         startActivity(intent);
     }
 
