@@ -70,7 +70,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
         //点击事件
         holder.mBinding.clArticleItem.setOnClickListener(v -> {
-            clickListener.onClick(article);
+            clickListener.clickArticle(article);
         });
 
         holder.mBinding.tvTitleArticle.setText(article.getTitle());
@@ -135,7 +135,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     public interface OnArticleClickListener {
-        void onClick(ArticleInfo article);
+        void clickArticle(ArticleInfo article);
     }
 
 }

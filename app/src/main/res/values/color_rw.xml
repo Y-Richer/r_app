@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_transparent">#00FFFFFF</color>
-    <color name="color_9876AA_100">#9876AA</color>
+    <color name="color_purple_100">#9876AA</color>
     <color name="color_E8BF6A_100">#E8BF6A</color>
-    <color name="color_629756_100">#629756</color>
+    <color name="color_green_100">#629756</color>
     <color name="color_344134_100">#344134</color>
-    <color name="color_6897BB_100">#6897BB</color>
-    <color name="color_6897BB_50">#806897BB</color>
-    <color name="color_A9B7C6_100">#A9B7C6</color>
+    <color name="color_blue_100">#6897BB</color>
+    <color name="color_blue_50">#806897BB</color>
+    <color name="color_white_100">#A9B7C6</color>
     <color name="color_A9B7C6_50">#80A9B7C6</color>
     <color name="color_2B2B2B_100">#2B2B2B</color>
     <color name="color_2B2B2B_80">#CC2B2B2B</color>
     <color name="color_black_background">#2B2B2B</color>
     <color name="color_black">#000000</color>
-    <color name="color_CC7832_100">#CC7832</color>
-    <color name="color_FCC66D_100">#FCC66D</color>
+    <color name="color_orange_100">#CC7832</color>
+    <color name="color_yellow_100">#FCC66D</color>
     <color name="color_52503A_100">#52503A</color>
     <color name="color_BBB52A_100">#BBB52A</color>
     <color name="color_BBB52A_80">#CCBBB52A</color>

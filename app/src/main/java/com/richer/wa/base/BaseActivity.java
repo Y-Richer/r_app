@@ -26,7 +26,7 @@ public abstract class BaseActivity<T extends BaseViewModel> extends RxAppCompatA
     /**
      * 设置ViewModel Class
      */
-    public abstract void setClazz();
+    protected abstract void setClazz();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

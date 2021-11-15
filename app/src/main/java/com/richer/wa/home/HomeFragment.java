@@ -9,20 +9,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.FragmentHomeBinding;
 import com.richer.wa.MainActivity;
-import com.richer.wa.RViewModelFactory;
 import com.richer.wa.base.BaseFragment;
 import com.richer.wa.base.BaseWebViewActivity;
 import com.richer.wa.eventbus.event.DataChangeEvent;
 import com.richer.wa.home.adapter.ArticleAdapter;
 import com.richer.wa.home.model.ArticleInfo;
 import com.richer.wa.home.view_model.HomeViewModel;
-import com.richer.wa.network.NetWorkUtil;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
@@ -35,9 +32,8 @@ import java.util.List;
  * create by richer on 2021/10/14
  * 首页
  */
-public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArticleClickListener {
+public class HomeFragment extends BaseFragment<HomeViewModel> implements ArticleAdapter.OnArticleClickListener {
 
-    private HomeViewModel mViewModel;
     private FragmentHomeBinding mBinding;
     private ArticleAdapter adapter;
 
@@ -63,10 +59,8 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(getViewModelStore(),
-                new RViewModelFactory(NetWorkUtil.getAPI())).get(HomeViewModel.class);
+    protected void setClazz() {
+        clazz = HomeViewModel.class;
     }
 
     @Nullable
@@ -159,7 +153,7 @@ public class HomeFragment extends BaseFragment implements ArticleAdapter.OnArtic
     }
 
     @Override
-    public void onClick(ArticleInfo article) {
+    public void clickArticle(ArticleInfo article) {
         String url = article.getLink();
         String title = article.getTitle();
         BaseWebViewActivity.start(getContext(), url, title);

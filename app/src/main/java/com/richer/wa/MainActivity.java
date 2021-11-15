@@ -100,15 +100,18 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
      * 初始化首页tab fragment
      */
     private void initHomeTabs() {
-        homeTabList.add(new HomeTab("home", HomeFragment.class));
-        homeTabList.add(new HomeTab("navigation", NavigationFragment.class));
-        homeTabList.add(new HomeTab("account", AccountFragment.class));
+        homeTabList.add(new HomeTab("home", HomeFragment.class, mBinding.ivHomeMain));
+        homeTabList.add(new HomeTab("navigation", NavigationFragment.class, mBinding.ivNavigateMain));
+        homeTabList.add(new HomeTab("account", AccountFragment.class, mBinding.ivAccountMain));
     }
 
     private void modifySelectedTab(int tabPosition) {
         for (int i = 0; i < homeTabList.size(); i++) {
             if (i == tabPosition) {
                 showSelectedFragment(homeTabList.get(i));
+                homeTabList.get(i).getHomeTabImg().setSelected(true);
+            } else {
+                homeTabList.get(i).getHomeTabImg().setSelected(false);
             }
         }
     }

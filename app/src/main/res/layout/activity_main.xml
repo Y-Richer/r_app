@@ -36,7 +36,7 @@
                 android:layout_marginStart="10dp"
                 android:text="wanAndroid"
                 android:textStyle="bold|italic"
-                android:textColor="@color/color_9876AA_100"
+                android:textColor="@color/color_purple_100"
                 android:onClick="goTest"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="goNavigation"
-                android:src="@drawable/ic_navigate_main"/>
+                android:src="@drawable/ic_navigation_main"/>
 
             <ImageView
                 android:id="@+id/iv_account_main"

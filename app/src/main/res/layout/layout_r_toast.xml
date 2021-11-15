@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:padding="20dp"
-    android:textColor="@color/color_A9B7C6_100"
+    android:textColor="@color/color_white_100"
     android:background="@drawable/background_r_toast"
     android:textSize="14dp"
     tools:text="this is a toast"

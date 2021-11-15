@@ -13,7 +13,7 @@
         android:layout_margin="6dp"
         android:background="@drawable/backgroud_hot_search_word"
         android:textSize="12dp"
-        android:textColor="@color/color_FCC66D_100"
+        android:textColor="@color/color_yellow_100"
         tools:text="AndroidStudio"/>
 
 </LinearLayout>
