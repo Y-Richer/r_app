@@ -96,7 +96,7 @@
             android:id="@+id/fragment_containner"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom_navigation_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -107,9 +107,47 @@
             android:layout_height="50dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/shape_button_circle_pink"
+            android:onClick="showSwitchDialog"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_navigation_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/color_black_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_home_main"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="goHome"
+                android:src="@drawable/ic_home_main"/>
+
+            <ImageView
+                android:id="@+id/iv_navigate_main"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="goNavigation"
+                android:src="@drawable/ic_navigate_main"/>
+
+            <ImageView
+                android:id="@+id/iv_account_main"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="goAccount"
+                android:src="@drawable/ic_account_main"/>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

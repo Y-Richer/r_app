@@ -12,10 +12,12 @@ import androidx.lifecycle.Lifecycle;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ActivityMainBinding;
+import com.richer.wa.account.view.AccountFragment;
 import com.richer.wa.base.BaseActivity;
 import com.richer.wa.base.BaseFragment;
 import com.richer.wa.eventbus.event.DataChangeEvent;
 import com.richer.wa.home.HomeFragment;
+import com.richer.wa.navigation.view.NavigationFragment;
 import com.richer.wa.search.model.HotSearchModel;
 import com.richer.wa.search.view.SearchActivity;
 import com.richer.wa.search.view_model.SearchViewModel;
@@ -35,7 +37,9 @@ import java.util.Random;
  */
 public class MainActivity extends BaseActivity<SearchViewModel> {
 
-    private final int TAB_INDEX_0 = 0;
+    private final int TAB_INDEX_HOME = 0;
+    private final int TAB_INDEX_NAVIGATION = 1;
+    private final int TAB_INDEX_ACCOUNT = 2;
 
     private ActivityMainBinding mBinding;
     String mHotSearWord;
@@ -54,6 +58,7 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         initHomeTabs();
+        initObserve();
         initView();
         initData();
     }
@@ -70,13 +75,7 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
         EventBus.getDefault().unregister(this);
     }
 
-    public void initData() {
-        mViewModel.getHotSearchWord();
-    }
-
-    private void initView() {
-        modifySelectedTab(TAB_INDEX_0);
-
+    private void initObserve() {
         mViewModel.hotSearchModel().observe(this, hotSearchModel -> {
             if (hotSearchModel != null && hotSearchModel.getData() != null) {
                 if (hotSearchModel.getData().size() > 0) {
@@ -89,11 +88,21 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
         });
     }
 
+    public void initData() {
+        mViewModel.getHotSearchWord();
+    }
+
+    private void initView() {
+        modifySelectedTab(TAB_INDEX_HOME);
+    }
+
     /**
      * 初始化首页tab fragment
      */
     private void initHomeTabs() {
         homeTabList.add(new HomeTab("home", HomeFragment.class));
+        homeTabList.add(new HomeTab("navigation", NavigationFragment.class));
+        homeTabList.add(new HomeTab("account", AccountFragment.class));
     }
 
     private void modifySelectedTab(int tabPosition) {
@@ -111,25 +120,23 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
             if (nextFragment == null) {
                 nextFragment = homeTab.getFragmentClass().newInstance();
             }
-            if (nextFragment != null) {
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                if (curFragment != null && curFragment != nextFragment) {
-                    transaction.hide(curFragment);
-                    transaction.setMaxLifecycle(curFragment, Lifecycle.State.STARTED);
-                }
-                if (nextFragment.isAdded()) {
-                    transaction.show(nextFragment);
-                    transaction.setMaxLifecycle(nextFragment, Lifecycle.State.RESUMED);
-                } else {
-                    transaction.add(R.id.fragment_containner, nextFragment, homeTab.getName());
-                }
-                transaction.commitAllowingStateLoss();
-                curFragment = (BaseFragment) nextFragment;
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            if (curFragment != null && curFragment != nextFragment) {
+                transaction.hide(curFragment);
+                transaction.setMaxLifecycle(curFragment, Lifecycle.State.STARTED);
             }
+            if (nextFragment.isAdded()) {
+                transaction.show(nextFragment);
+                transaction.setMaxLifecycle(nextFragment, Lifecycle.State.RESUMED);
+            } else {
+                transaction.add(R.id.fragment_containner, nextFragment, homeTab.getName());
+            }
+            transaction.commitAllowingStateLoss();
+            curFragment = (BaseFragment) nextFragment;
         } catch (IllegalAccessException e) {
 
         } catch (InstantiationException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -144,6 +151,18 @@ public class MainActivity extends BaseActivity<SearchViewModel> {
         bundle.putString("search_key", mHotSearWord);
         intent.putExtra(BUNDLE_KEY, bundle);
         startActivity(intent);
+    }
+
+    public void goHome(View view) {
+        modifySelectedTab(TAB_INDEX_HOME);
+    }
+
+    public void goNavigation(View view) {
+        modifySelectedTab(TAB_INDEX_NAVIGATION);
+    }
+
+    public void goAccount(View view) {
+        modifySelectedTab(TAB_INDEX_ACCOUNT);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
