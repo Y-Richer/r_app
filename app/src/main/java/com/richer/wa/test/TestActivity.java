@@ -52,7 +52,6 @@ public class TestActivity extends BaseActivity<TestViewModel> {
         list.add("Click#15");
         list.add("斯斯与帆");
 
-        mBinding.autoNewlineTvTest.setText(list);
     }
 
 }

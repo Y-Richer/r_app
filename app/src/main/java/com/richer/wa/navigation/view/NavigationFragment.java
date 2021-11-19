@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.FragmentNavigationBinding;
 import com.richer.wa.base.BaseFragment;
+import com.richer.wa.classify.ClassifyActivity;
 import com.richer.wa.navigation.view_model.NavigationViewModel;
 
 public class NavigationFragment extends BaseFragment<NavigationViewModel> {
@@ -37,6 +38,11 @@ public class NavigationFragment extends BaseFragment<NavigationViewModel> {
     }
 
     private void initView() {
-
+        mBinding.tvClassifyNavigation.setOnClickListener(this::goClassify);
     }
+
+    public void goClassify(View view) {
+        ClassifyActivity.start(getContext());
+    }
+
 }

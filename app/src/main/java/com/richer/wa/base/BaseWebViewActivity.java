@@ -62,13 +62,21 @@ public class BaseWebViewActivity extends BaseActivity<BaseViewModel> implements 
 
     private void initWebView() {
         mBinding.webview.loadUrl(url);
+        WebSettings settings = mBinding.webview.getSettings();
         mBinding.webview.setWebViewClient(new BaseWebViewClient());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBinding.webview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        mBinding.webview.getSettings().setDomStorageEnabled(true);
-        mBinding.webview.getSettings().setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setJavaScriptEnabled(true);
         mBinding.webview.setWebChromeClient(new BaseWebChromeClient());
+
+        //支持缩放
+        settings.setSupportZoom(true);
+
+        //让h5能够识别出本APP
+        String ua = settings.getUserAgentString();
+        settings.setUserAgentString(ua + "; ****");
     }
 
     @Override
@@ -104,8 +112,8 @@ public class BaseWebViewActivity extends BaseActivity<BaseViewModel> implements 
             if (!TextUtils.isEmpty(url)) {
                 if (url.startsWith("http") || url.startsWith("https")) {
                     view.loadUrl(url);
-                    return true;
                 }
+                return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
         }

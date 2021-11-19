@@ -14,6 +14,29 @@ import java.util.List;
  * create by yangrunqiu on 2021/10/29
  * 自动换行布局
  * 通过setAutoNewlineHelper设置item布局和数据
+ *
+ * mBinding.autoNewlineHotSearchWord.setAutoNewlineHelper(new AutoNewlineLayout.AutoNewlineHelper<DataBean>() {
+ *             @Override
+ *             public List<DataBean> getDataList() {
+ *                 return dataList;
+ *             }
+ *
+ *             @Override
+ *             public View getItemView(ViewGroup container) {
+ *                 return LayoutInflater.from(container.getContext()).inflate(R.layout._, container, false);
+ *             }
+ *
+ *             @Override
+ *             public void onClickItem(int position, DataBean data) {
+ *                 ...
+ *             }
+ *
+ *             @Override
+ *             public void bindItemView(View itemView, HotSearchModel.HotSearchBean data) {
+ *                 ...
+ *             }
+ *         });
+ *
  */
 public class AutoNewlineLayout extends LinearLayout {
 

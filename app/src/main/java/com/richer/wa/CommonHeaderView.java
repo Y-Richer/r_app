@@ -57,9 +57,9 @@ public class CommonHeaderView extends LinearLayout {
     }
 
     public interface OnHeaderClickListener {
-        void onClickBack(View view);
+        default void onClickBack(View view){}
 
-        void onClickMenu(View view);
+        default void onClickMenu(View view){}
     }
 
 }
