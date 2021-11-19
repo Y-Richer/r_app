@@ -53,6 +53,7 @@ public class AutoNewlineLayout extends LinearLayout {
     }
 
     public <T> void setAutoNewlineHelper(AutoNewlineHelper<T> helper) {
+        removeAllViews();
         List<T> dataList = helper.getDataList();
         for (int i = 0; i < dataList.size(); i++) {
             View itemView = helper.getItemView(this);

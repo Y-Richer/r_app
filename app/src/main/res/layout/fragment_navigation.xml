@@ -9,17 +9,23 @@
         android:layout_height="match_parent"
         android:background="@color/color_black_background">
 
-        <TextView
-            android:id="@+id/tv_classify_navigation"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_title_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:textColor="@color/color_white_100"
-            android:textSize="14dp"
-            android:text="导航 >"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="1" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_title_navigation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

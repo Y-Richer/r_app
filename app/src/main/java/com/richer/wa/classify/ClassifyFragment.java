@@ -1,18 +1,19 @@
 package com.richer.wa.classify;
 
-import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.richer.richers.richer_wa.R;
 import com.richer.richers.richer_wa.databinding.ActivityClassifyBinding;
-import com.richer.wa.CommonHeaderView;
-import com.richer.wa.base.BaseActivity;
+import com.richer.wa.base.BaseFragment;
 import com.richer.wa.base.BaseWebViewActivity;
 import com.richer.wa.classify.adapter.ClassifyArticleAdapter;
 import com.richer.wa.classify.adapter.ClassifyChapterAdapter;
@@ -23,15 +24,10 @@ import com.richer.wa.home.model.ArticleInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassifyActivity extends BaseActivity<ClassifyViewModel> implements ClassifyChapterAdapter.ClassifyChapterListener, ClassifyArticleAdapter.ClassifyArticleListener {
+public class ClassifyFragment extends BaseFragment<ClassifyViewModel> implements ClassifyChapterAdapter.ClassifyChapterListener, ClassifyArticleAdapter.ClassifyArticleListener {
     @Override
     protected void setClazz() {
         clazz = ClassifyViewModel.class;
-    }
-
-    public static void start(Context context) {
-        Intent intent = new Intent(context, ClassifyActivity.class);
-        context.startActivity(intent);
     }
 
     ActivityClassifyBinding mBinding;
@@ -39,16 +35,23 @@ public class ClassifyActivity extends BaseActivity<ClassifyViewModel> implements
     ClassifyChapterAdapter mChapterAdapter;
     ClassifyArticleAdapter mArticleAdapter;
 
+    @Nullable
     @Override
-    protected void initActivity() {
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_classify);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View root = LayoutInflater.from(container.getContext()).inflate(R.layout.activity_classify, container, false);
+        mBinding = DataBindingUtil.bind(root);
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         initData();
         initView();
     }
 
     private void initData() {
         mViewModel.getClassifyArticle();
-        mViewModel.classifyArticleLiveData.observe(this, classifyModel -> {
+        mViewModel.classifyArticleLiveData.observe(getViewLifecycleOwner(), classifyModel -> {
             if (classifyModel.getData() != null) {
                 mClassifyChapterList = classifyModel.getData();
                 mChapterAdapter.setChapterList(mClassifyChapterList);
@@ -59,19 +62,13 @@ public class ClassifyActivity extends BaseActivity<ClassifyViewModel> implements
     }
 
     private void initView() {
-        mBinding.headerClassify.init("导航", new CommonHeaderView.OnHeaderClickListener() {
-            @Override
-            public void onClickBack(View view) {
-                finish();
-            }
-        });
-        mChapterAdapter = new ClassifyChapterAdapter(this, mClassifyChapterList, this);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mChapterAdapter = new ClassifyChapterAdapter(getContext(), mClassifyChapterList, this);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mBinding.rvChapterClassify.setLayoutManager(manager);
         mBinding.rvChapterClassify.setAdapter(mChapterAdapter);
 
         mArticleAdapter = new ClassifyArticleAdapter(mClassifyChapterList, this);
-        manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mBinding.rvCatalogClassify.setLayoutManager(manager);
         mBinding.rvCatalogClassify.setAdapter(mArticleAdapter);
         mBinding.rvCatalogClassify.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -98,6 +95,6 @@ public class ClassifyActivity extends BaseActivity<ClassifyViewModel> implements
 
     @Override
     public void onArticleClick(int position, ArticleInfo data) {
-        BaseWebViewActivity.start(this, data.getLink(), data.getTitle());
+        BaseWebViewActivity.start(getContext(), data.getLink(), data.getTitle());
     }
 }

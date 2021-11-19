@@ -27,7 +27,6 @@
         <activity android:name="com.richer.wa.test.TestActivity"></activity>
         <activity android:name="com.richer.wa.search.view.SearchActivity"
             android:windowSoftInputMode="stateVisible"></activity>
-        <activity android:name="com.richer.wa.classify.ClassifyActivity"></activity>
     </application>
 
 </manifest>
